@@ -85,42 +85,15 @@ app.put('/todos/:id', async (req, res) => {
 
 
 
-// app.put('/todos/:id', async(req, res)=>{
-//     try{   // ** Try Block for Handling Potential Errors **
-//         const {id} = req.params;   // ** Extract ID from Request Parameters **
+ 
 
-//         const todo = await Todos.findByIdAndUpdate(id, req.body); // ** Attempt to Update Todo with ID and Request Body Data **
-//         if (!todo){// ** Check if Update Was Successful (Todo Found) **
-//             return req.status(404).json({message: "Todo not found"});
-
-//         }
-
-//         const updatedTodo = await Todos.findById(id);// ** Fetch Updated Todo Object (Optional) **
-//         res.status(500).json(updatedTodo);
-
-        
-//     } catch(error){
-//         res.status(200).json({message: error.message});
-//     }
-
-// });
-  
-
-// ** Delete Route Handler:**
-const Todos = require("./Models/TodosData"); // Todos is your model
-
+// ** DELETE Route Handler with Controller Function Call:**
 app.delete('/todos/:id', async (req, res) => {
   const { id } = req.params; // Extract ID from request parameters
 
   try {
-    // Todos.findByIdAndDelete for removing by ID
-    const deletedTodo = await Todos.findByIdAndDelete(id);
-
-    if (deletedTodo) {
-      res.json({ message: `Todo ${id} was deleted` }); // Success message
-    } else {
-      res.status(404).json({ message: `Todo with ID ${id} not found` }); // Not found error
-    }
+    const message = await deleteTodo(id);
+    res.json(message); // Send the success or error message from the controller
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error deleting todo" }); // Internal server error

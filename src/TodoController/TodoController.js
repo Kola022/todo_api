@@ -16,21 +16,6 @@ function createTodos(type, task, assigned, statusReport) {
   };
 
 
-// OR
-// function createTodos(type, task, assigned, statusReport){
-
-//     const todo = new Todos;
-
-//     todo.type = type;
-//     todo.task = task;
-//     todo.assigned = assigned;
-//     todo.statusReport = statusReport;
-
-//     todo.save();
- 
-//     return todo;
-    
-// };
 
 // Function to retrieve all todos
 function getAllTodos() {
@@ -63,20 +48,21 @@ function getAllTodos() {
 
 
 // //Delete Function 
-async function removeTodo(id) {
-    try {
-      const deletedTodo = await Todos.findByIdAndDelete(id);
-  
-      if (deletedTodo) {
-        return { message: `Todo ${id} was deleted` }; // Success message
-      } else {
-        return { message: `Todo with ID ${id} not found` }; // Not found error
-      }
-    } catch (error) {
-      console.error(error);
-      throw error; // Re-throw the error for handling in the route handler
+async function deleteTodo(id) {
+  try {
+    // Assuming Todos.findByIdAndDelete exists for deleting by ID
+    const deletedTodo = await Todos.findByIdAndDelete(id);
+
+    if (deletedTodo) {
+      return { message: `Todo ${id} was deleted` }; // Success message
+    } else {
+      return { message: `Todo with ID ${id} not found` }; // Not found error
     }
-  };
+  } catch (error) {
+    console.error(error);
+    throw error; // Re-throw the error for handling in the route handler
+  }
+}
   
   
 
@@ -84,6 +70,6 @@ module.exports = {// Export the functions for use in other modules
     createTodos,
     getAllTodos,
     updateTodo,    
-    removeTodo
+    deleteTodo
     
 };
